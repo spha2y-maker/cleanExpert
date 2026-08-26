@@ -29,7 +29,7 @@ export const ITINERARY_DATA: ItineraryDay[] = [
     ],
     schedule: [
       {
-        time: '06:00',
+        time: '07:00',
         activity: '담양 집결 후 인천공항으로 전용차량 이동',
         iconType: 'bus',
         description: '설레는 마음으로 담양에서 출발! 안전벨트 착용 및 인원 점검',
@@ -98,7 +98,7 @@ export const ITINERARY_DATA: ItineraryDay[] = [
     hotel: '상하이 특급 호텔 (HOTEL)',
     meals: {
       breakfast: '호텔 뷔페식',
-      lunch: '사우스뷰티 (고급 사천요리)',
+      lunch: '금미로 식당 (광동식 요리)',
       dinner: '해녀제주식당 (한식 삼겹살 특식)',
     },
     tips: [
@@ -131,9 +131,9 @@ export const ITINERARY_DATA: ItineraryDay[] = [
       },
       {
         time: '12:00',
-        activity: '중식: 사우스뷰티 (South Beauty, 정통 사천요리)',
+        activity: '중식: 금미로 식당 (광동식 요리)',
         iconType: 'food',
-        description: '다채롭고 풍미 가득한 중국 4대 요리 중 하나인 사천 음식 체험',
+        description: '담백하고 다채로운 딤섬과 풍미 가득한 정통 광동식 요리 체험',
       },
       {
         time: '13:30',
