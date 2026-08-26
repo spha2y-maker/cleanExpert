@@ -1,8 +1,8 @@
 /**
- * Web Speech API helper for speech synthesis (Chinese & Korean pronunciation)
+ * Web Speech API helper for speech synthesis (Chinese, English & Korean pronunciation)
  */
 
-export function speakText(text: string, lang: 'zh-CN' | 'ko-KR' = 'zh-CN') {
+export function speakText(text: string, lang: 'zh-CN' | 'ko-KR' | 'en-US' = 'zh-CN') {
   if (!('speechSynthesis' in window)) {
     console.warn('Speech synthesis is not supported by your browser.');
     return;

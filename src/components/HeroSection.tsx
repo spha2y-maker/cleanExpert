@@ -23,7 +23,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   stampsCount,
   totalStamps,
 }) => {
-  // Countdown to 2026-10-13 06:00:00
+  // Countdown to 2026-10-13 07:00:00
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
     hours: number;
@@ -32,7 +32,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const targetDate = new Date('2026-10-13T06:00:00+09:00').getTime();
+    const targetDate = new Date('2026-10-13T07:00:00+09:00').getTime();
 
     const calculateTime = () => {
       const now = new Date().getTime();
@@ -140,7 +140,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span>탐방 출발 카운트다운</span>
               </span>
               <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold font-mono">
-                2026.10.13 06:00
+                2026.10.13 07:00
               </span>
             </div>
             <div className="grid grid-cols-4 gap-2 text-center">

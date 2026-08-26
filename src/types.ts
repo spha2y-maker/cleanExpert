@@ -127,6 +127,16 @@ export interface ChinesePhrase {
   situationTip: string;
 }
 
+export interface ImmigrationEnglishPhrase {
+  id?: string;
+  category: string;
+  korean: string;
+  english: string;
+  pronunciationKorean: string;
+  speakerRole?: 'officer' | 'student'; // 심사관 질문 또는 학생 답변
+  situationTip: string;
+}
+
 export interface ChecklistItem {
   id: string;
   category: 'documents' | 'electronics' | 'clothing' | 'hygiene' | 'learning';
