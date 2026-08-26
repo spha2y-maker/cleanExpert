@@ -17,6 +17,11 @@ import {
   Compass,
   BookmarkCheck,
   Send,
+  MapPin,
+  CheckSquare,
+  BookOpen,
+  HelpCircle,
+  PenTool,
 } from 'lucide-react';
 
 interface InteractiveWorkbookViewProps {
@@ -34,7 +39,7 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
   onToggleStamp,
   onNavigateTab,
 }) => {
-  const [activeSubTab, setActiveSubTab] = useState<'all' | 'profile' | 'stamps' | 'journal' | 'reflection'>('all');
+  const [selectedLocFilter, setSelectedLocFilter] = useState<string>('all');
   const [savedToast, setSavedToast] = useState(false);
 
   const handlePrint = () => {
@@ -74,7 +79,7 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
     );
     onAnswerChange(
       'val-3',
-      '윤봉길 의사가 김구 선생에게 "제 시계는 6원을 주고 산 것인데 선생님 시계는 2원짜리이니 바꾸어 찹시다. 저는 이제 한 시간밖에 더 살지 못합니다"라고 담담히 미소 짓던 장면.'
+      '윤봉길 의사가 김구 선생에게 "제 시계는 6원을 주고 산 것인데 선생님 시계는 2원짜리이니 바꾸어 찹시다. 저는 이제 한 시간밖에 더 살지 못합니다"라고 담담히 미소 짓던 결단의 순간.'
     );
     onAnswerChange(
       'val-4',
@@ -97,11 +102,121 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
       '2036년 10년 후, 나는 K-컬처와 지역 전통문화를 융합하여 전 세계에 한국의 아름다움을 알리는 글로벌 문화 기획자가 되어 있을 것입니다. 담양의 청소년들에게 더 넓은 세상을 선물하는 멘토가 되겠습니다.'
     );
 
+    // Location-specific sample answers for all 8 destinations
+    onAnswerChange(
+      'loc_nanjing-road_1',
+      '일제 감시망이 극에 달했던 시기, 수많은 외국인과 인파가 뒤섞이는 남경로 조계지의 백화점과 교회가 오히려 가장 은밀하고 안전한 비밀 접선지가 될 수 있었습니다.'
+    );
+    onAnswerChange(
+      'loc_nanjing-road_2',
+      '영안백화점 옥상에서 1921년 59인의 독립운동 지도자들이 찍은 [통합 임시정부 신년 하례회 사진]을 떠올리며, 분열을 넘어 대의를 위해 하나로 뭉친 단결의 힘을 배웠습니다.'
+    );
+    onAnswerChange(
+      'loc_nanjing-road_notes',
+      '보행자 거리 곳곳에 남아 있는 근대 석조 건물 양식을 관찰함. 목은당 교회의 붉은 벽돌 종탑이 조계지 시절의 비밀 외교망을 묵묵히 증언하고 있었음.'
+    );
+
+    onAnswerChange(
+      'loc_the-bund_1',
+      '오성륜, 김익상, 이종암 세 청년이 20대의 나이에 일제 군벌 수괴 다나카 기이치를 처단하기 위해 세운 치밀한 3단계 암살 작전도를 보며, 목숨을 아끼지 않은 의열투쟁의 결연함에 깊은 전율을 느꼈습니다.'
+    );
+    onAnswerChange(
+      'loc_the-bund_2',
+      '황푸강 너머 19세기 서양 석조 조계지(와이탄)와 21세기 초고층 마천루(푸동)가 마주보는 풍경 속에서, 침탈당했던 아픈 과거를 딛고 일어선 역사적 교훈과 자존감을 되새겨야겠다고 생각했습니다.'
+    );
+    onAnswerChange(
+      'loc_the-bund_notes',
+      '신고전주의 및 아르데코 양식의 웅장한 석조 기둥 스케치. 피해자였던 미국인 톰슨 부부조차 감형 탄원서를 낼 정도로 세계 언론에 울림을 준 황포탄 의거의 현장을 확인함.'
+    );
+
+    onAnswerChange(
+      'loc_luxun-park_1',
+      '자신의 꽃다운 청춘과 마지막 남은 한 시간을 조국의 독립과 미래 후손들의 평화를 위해 기꺼이 바칠 수 있었던 순수한 신념과 민족에 대한 뜨거운 사랑에서 나왔다고 생각합니다.'
+    );
+    onAnswerChange(
+      'loc_luxun-park_2',
+      '《맞바꾼 회중시계》 속 약속처럼, 편안함만을 좇지 않고 내 주변 이웃과 공동체의 어려움에 공감하며 올바른 정의를 위해 작은 용기를 실천하는 리더가 되겠습니다.'
+    );
+    onAnswerChange(
+      'loc_luxun-park_notes',
+      '매헌 기념관 흉상 앞에서 모둠원들과 함께 묵념을 올림. 2층 전시실에서 물통 폭탄 모형과 두 아들에게 남긴 친필 유언("피와 뼈가 있다면 용감한 투사가 되어라")을 정독함.'
+    );
+
+    onAnswerChange(
+      'loc_provisional-government_1',
+      '단 한 푼의 재정 지원도 부족한 낡은 붉은 벽돌집에서 13년을 버텨낸 힘은 "반드시 우리 손으로 독립을 이루겠다"는 불굴의 애국심과 주권 재민의 민주공화정 신념이었습니다.'
+    );
+    onAnswerChange(
+      'loc_provisional-government_2',
+      '백범 김구 선생이 꿈꾼 "오직 한없이 가지고 싶은 것은 높은 문화의 힘"은 오늘날 K-팝, K-무비, 한국의 따뜻한 민주주의와 글로벌 나눔으로 전 세계에 실현되고 있습니다.'
+    );
+    onAnswerChange(
+      'loc_provisional-government_notes',
+      '1층 회의실과 2층 김구 집무실의 낡은 책상, 태극기를 관찰함. 좁고 가파른 계단을 오르내리며 독립운동가들의 고단하면서도 숭고했던 일상을 가슴 깊이 체감함.'
+    );
+
+    onAnswerChange(
+      'loc_oriental-pearl_1',
+      '인공지능 기반 지능형 교통망과 100% 신재생 에너지 스마트 빌딩이 연결된 미래 도시는 에너지 낭비를 줄이고 인간의 삶을 안전하고 편리하게 바꿀 것입니다.'
+    );
+    onAnswerChange(
+      'loc_oriental-pearl_2',
+      '담양의 청정 대나무 숲과 생태 관광 인프라에 상하이의 첨단 친환경 스마트 시티 기술을 융합하여, 세계인이 찾아오는 "탄소중립 생태 스마트 도시 담양"을 만들고 싶습니다.'
+    );
+    onAnswerChange(
+      'loc_oriental-pearl_notes',
+      '259m 투명 스카이워크 유리 바닥 위에서 푸동의 마천루를 내려다봄. 도시계획전시관 초대형 디오라마에서 2050 상하이 미래 마스터플랜의 친환경 수변 개발 구역을 확인.'
+    );
+
+    onAnswerChange(
+      'loc_yuyuan-garden_1',
+      '담양 소쇄원이 자연의 지형을 거스르지 않는 소박하고 담백한 무작위의 미학이라면, 예원은 18년에 걸쳐 인공 돌산과 구곡교, 용 벽을 정교하게 조각한 화려한 강남 원림의 정수라는 차이가 있습니다.'
+    );
+    onAnswerChange(
+      'loc_yuyuan-garden_2',
+      '부모님과 가족들이 사계절 내내 편안하게 산책하며 자연의 아름다움을 누릴 수 있도록, 따뜻한 온기와 지혜로운 책이 가득한 "마음의 힐링 정원 도서관"을 설계하고 싶습니다.'
+    );
+    onAnswerChange(
+      'loc_yuyuan-garden_notes',
+      '지그재그로 아홉 번 꺾인 구곡교를 건너며 경치를 감상함. 기와로 섬세하게 조각된 용 벽(Dragon Wall)의 곡선미와 호심정 찻집의 운치를 스케치함.'
+    );
+
+    onAnswerChange(
+      'loc_science-tech-museum_1',
+      '로봇과 AI가 고도화될수록 공감 능력, 윤리적 판단력, 예술적 감수성, 사람의 마음을 잇는 따뜻한 소통 능력이 인간만의 대체 불가능한 핵심 경쟁력이 될 것입니다.'
+    );
+    onAnswerChange(
+      'loc_science-tech-museum_2',
+      '기후 위기를 해결하기 위한 친환경 청정 에너지 기술과 바이오 헬스케어 인공지능 연구에 도전하여 전 세계 취약계층의 삶을 개선하는 과학자가 되고 싶습니다.'
+    );
+    onAnswerChange(
+      'loc_science-tech-museum_notes',
+      '로봇 세상관에서 AI 오목 대결 및 댄스 로봇의 관절 서보모터 제어 메커니즘을 체험. 우주 탐사관에서 무중력 훈련 장비의 물리적 원리를 관찰함.'
+    );
+
+    onAnswerChange(
+      'loc_disneyland_1',
+      '디즈니의 비결은 단순한 놀이기구가 아니라, 모든 어트랙션에 관람객이 주인공이 되어 감정을 이입하게 만드는 탄탄하고 감동적인 [스토리텔링]에 있습니다.'
+    );
+    onAnswerChange(
+      'loc_disneyland_2',
+      '담양의 대나무 전설과 조선 선비들의 가사문학, 그리고 임시정부 청년들의 독립운동 서사를 결합한 실감형 역사 테마 어드벤처 콘텐츠를 기획해보고 싶습니다.'
+    );
+    onAnswerChange(
+      'loc_disneyland_notes',
+      '트론 라이트사이클의 리니어 모터 가속 공학과 마법의 성 일루미네이션 프로젝션 매핑 기술을 관찰. 문화 콘텐츠가 국경을 넘어 사람들에게 주는 벅찬 감동을 분석함.'
+    );
+
     confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
     handleTriggerSave();
   };
 
   const completedStampsCount = profile.collectedStamps.length;
+
+  const filteredDestinations =
+    selectedLocFilter === 'all'
+      ? DESTINATIONS_DATA
+      : DESTINATIONS_DATA.filter((d) => d.id === selectedLocFilter);
 
   return (
     <section className="py-10 bg-slate-50 text-slate-800 min-h-screen print:bg-white print:text-black">
@@ -111,7 +226,7 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
           <div>
             <div className="flex items-center space-x-2 text-emerald-700 text-xs sm:text-sm font-bold mb-1">
               <span className="text-base">📋</span>
-              <span>학생 개인 맞춤형 디지털 포트폴리오</span>
+              <span>학생 개인 맞춤형 디지털 포트폴리오 & 장소별 현장 활동지</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
               나의 글로컬 역사·문화 탐방 워크북 ✨
@@ -122,7 +237,7 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
             <button
               onClick={handleLoadSampleData}
               className="px-3.5 py-2 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-sm transition"
-              title="예시 답변 및 스탬프를 자동으로 채워봅니다."
+              title="8대 장소별 활동지 및 성찰 일지 예시 데이터를 자동으로 채워봅니다."
             >
               🪄 예시 데이터 채우기
             </button>
@@ -295,15 +410,15 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
           {/* SECTION 3: 4-Step '자기 이해와 삶의 방향' Answers Review */}
           <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 print:bg-slate-50 border border-slate-200 print:border-slate-300 space-y-6">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 print:border-slate-300">
-              <h3 className="text-sm font-bold text-purple-900 print:text-purple-800 flex items-center space-x-2">
-                <span className="text-base">💡</span>
-                <span>3. 도서 연계 ‘자기 이해와 삶의 방향’ 종합 성찰 기록</span>
+              <h3 className="text-sm font-bold text-rose-900 print:text-rose-800 flex items-center space-x-2">
+                <span className="text-base">⏱️</span>
+                <span>3. 《맞바꾼 회중시계》 연계 ‘자기 이해와 삶의 방향’ 종합 성찰 기록</span>
               </h3>
               <button
                 onClick={() => onNavigateTab('books_learning')}
-                className="print:hidden text-xs font-bold text-sky-700 hover:underline"
+                className="print:hidden text-xs font-bold text-rose-700 hover:underline"
               >
-                질문 가이드 다시 보기 ➔
+                《맞바꾼 회중시계》 질문 가이드 다시 보기 ➔
               </button>
             </div>
 
@@ -343,11 +458,182 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
             </div>
           </div>
 
-          {/* SECTION 4: Daily Reflection Logs (Day 1~4) */}
+          {/* SECTION 4: Location-Specific Field Activity Worksheets (장소별 활동지) */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 print:bg-slate-50 border border-slate-200 print:border-slate-300 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 print:border-slate-300 gap-2">
+              <div>
+                <h3 className="text-sm font-bold text-emerald-900 print:text-emerald-800 flex items-center space-x-2">
+                  <MapPin className="w-4 h-4 text-emerald-600" />
+                  <span>4. 상하이 8대 탐방지별 현장 탐구 활동지 (Field Missions & Worksheets)</span>
+                </h3>
+                <p className="text-[11px] text-slate-500 print:text-slate-600 mt-0.5">
+                  장소별 핵심 미션 확인, 교과 연계 탐구 질문, 현장 관찰 및 성찰 노트를 꼼꼼히 기록합니다.
+                </p>
+              </div>
+
+              {/* On-screen filter tabs (hidden in print so all 8 are printed) */}
+              <div className="print:hidden flex items-center flex-wrap gap-1.5 pt-2 sm:pt-0">
+                <button
+                  onClick={() => setSelectedLocFilter('all')}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                    selectedLocFilter === 'all'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                  }`}
+                >
+                  전체 (8개소)
+                </button>
+                {DESTINATIONS_DATA.map((d) => (
+                  <button
+                    key={d.id}
+                    onClick={() => setSelectedLocFilter(d.id)}
+                    className={`px-2 py-1 rounded-lg text-xs font-bold transition flex items-center space-x-1 ${
+                      selectedLocFilter === d.id
+                        ? 'bg-emerald-600 text-white shadow-xs'
+                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span>{d.emoji}</span>
+                    <span className="hidden md:inline">{d.name.split(' ')[0]}</span>
+                    <span className="md:hidden">{d.num}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Destination Worksheets List */}
+            <div className="space-y-6">
+              {filteredDestinations.map((dest) => {
+                const isStamped = profile.collectedStamps.includes(dest.id);
+                return (
+                  <div
+                    key={dest.id}
+                    className="p-5 rounded-2xl bg-white print:bg-white border border-slate-200 print:border-slate-300 shadow-sm space-y-4 break-inside-avoid"
+                  >
+                    {/* Destination Sheet Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+                      <div className="flex items-center space-x-3">
+                        <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black text-sm flex-shrink-0">
+                          {dest.num}
+                        </span>
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-xl">{dest.emoji}</span>
+                            <h4 className="text-base font-black text-slate-900 print:text-black">
+                              {dest.name}
+                            </h4>
+                            <span className="text-xs text-slate-400 font-normal">
+                              ({dest.chineseName} · {dest.pinyin})
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-600 print:text-slate-600 mt-0.5 font-medium">
+                            🏷️ <span className="font-bold text-slate-700">{dest.tag}</span> | {dest.brief}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2 self-start sm:self-auto">
+                        <span
+                          className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
+                            isStamped
+                              ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                              : 'bg-slate-50 text-slate-500 border-slate-200'
+                          }`}
+                        >
+                          {isStamped ? '🏅 스탬프 획득 완료' : '미완료 스탬프'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Part A: Field Missions */}
+                    <div className="p-3.5 rounded-xl bg-emerald-50/50 print:bg-emerald-50/30 border border-emerald-100">
+                      <span className="text-xs font-bold text-emerald-900 block mb-1.5 flex items-center space-x-1.5">
+                        <CheckSquare className="w-3.5 h-3.5 text-emerald-700" />
+                        <span>현장 탐방 필수 미션 (Check Missions)</span>
+                      </span>
+                      <ul className="space-y-1.5">
+                        {dest.missions.map((m, mIdx) => (
+                          <li key={mIdx} className="text-xs text-slate-700 flex items-start space-x-2">
+                            <span className="text-emerald-600 font-bold mt-0.5">•</span>
+                            <span className="font-medium">{m}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Part B: Curriculum Connections */}
+                    {dest.curriculumLinks && dest.curriculumLinks.length > 0 && (
+                      <div className="p-3.5 rounded-xl bg-sky-50/50 print:bg-sky-50/30 border border-sky-100">
+                        <span className="text-xs font-bold text-sky-900 block mb-1.5 flex items-center space-x-1.5">
+                          <BookOpen className="w-3.5 h-3.5 text-sky-700" />
+                          <span>교과 연계 탐구 가이드 (Curriculum Link)</span>
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
+                          {dest.curriculumLinks.map((c, cIdx) => (
+                            <div key={cIdx} className="bg-white p-2.5 rounded-lg border border-sky-100">
+                              <span className="inline-block font-bold text-sky-800 bg-sky-100 px-1.5 py-0.5 rounded text-[10px] mr-1.5">
+                                [{c.subject}] {c.topic}
+                              </span>
+                              <p className="text-[11px] text-slate-600 mt-1 leading-relaxed font-medium">
+                                {c.activity}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Part C: Key Reflection Questions (Direct Answers) */}
+                    <div className="space-y-3 pt-1">
+                      <span className="text-xs font-bold text-slate-900 print:text-black block flex items-center space-x-1.5">
+                        <HelpCircle className="w-3.5 h-3.5 text-amber-600" />
+                        <span>현장 탐구 & 성찰 질문 작성란 (Activity Questions)</span>
+                      </span>
+
+                      {dest.keyQuestions.map((qText, qIdx) => {
+                        const qKey = `loc_${dest.id}_${qIdx + 1}`;
+                        return (
+                          <div key={qKey} className="space-y-1">
+                            <label className="text-xs font-bold text-slate-800 print:text-slate-800 block">
+                              Q{qIdx + 1}. {qText}
+                            </label>
+                            <textarea
+                              rows={2}
+                              placeholder="현장에서 관찰하고 느낀 생각을 구체적으로 작성하세요..."
+                              value={profile.answers[qKey] || ''}
+                              onChange={(e) => onAnswerChange(qKey, e.target.value)}
+                              className="w-full px-3 py-2 rounded-xl bg-slate-50 print:bg-slate-50 border border-slate-300 print:border-slate-300 text-xs text-slate-900 print:text-black focus:outline-none focus:border-emerald-500 font-medium"
+                            />
+                          </div>
+                        );
+                      })}
+
+                      {/* Extra Field Observation Notes */}
+                      <div className="space-y-1 pt-1">
+                        <label className="text-xs font-bold text-slate-700 print:text-slate-700 block flex items-center space-x-1">
+                          <PenTool className="w-3 h-3 text-slate-400" />
+                          <span>추가 현장 스케치 / 자유 관찰 기록 (Field Notes)</span>
+                        </label>
+                        <textarea
+                          rows={2}
+                          placeholder="인상 깊었던 건물 양식, 전시물, 모둠원들과의 토론 내용, 사진 촬영 메모 등을 자유롭게 적어보세요..."
+                          value={profile.answers[`loc_${dest.id}_notes`] || ''}
+                          onChange={(e) => onAnswerChange(`loc_${dest.id}_notes`, e.target.value)}
+                          className="w-full px-3 py-2 rounded-xl bg-slate-50 print:bg-slate-50 border border-slate-300 print:border-slate-300 text-xs text-slate-900 print:text-black focus:outline-none focus:border-emerald-500 font-medium"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* SECTION 5: Daily Reflection Logs (Day 1~4) */}
           <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 print:bg-slate-50 border border-slate-200 print:border-slate-300 space-y-4">
             <h3 className="text-sm font-bold text-emerald-900 print:text-emerald-800 flex items-center space-x-2">
               <span className="text-base">📅</span>
-              <span>4. 일자별 현장 성찰 일지 (Daily Journal)</span>
+              <span>5. 일자별 현장 성찰 일지 (Daily Journal)</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -436,4 +722,5 @@ export const InteractiveWorkbookView: React.FC<InteractiveWorkbookViewProps> = (
     </section>
   );
 };
+
 
