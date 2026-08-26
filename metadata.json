@@ -1,0 +1,6 @@
+{
+  "name": "2026 글로컬 죽향 역사·문화 탐방 가이드",
+  "description": "담양 중학생을 위한 상하이 역사·문화 탐방 가이드 및 자기 이해와 삶의 방향 학습 활동 웹북",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
